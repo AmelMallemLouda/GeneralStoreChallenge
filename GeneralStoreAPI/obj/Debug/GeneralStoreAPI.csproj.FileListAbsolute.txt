@@ -109,14 +109,8 @@ C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\bin\Microsoft.Owin.S
 C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\bin\System.Web.Http.Owin.xml
 C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.csprojAssemblyReference.cache
 C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.csproj.CoreCompileInputs.cache
 C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.csproj.CopyComplete
 C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.dll
 C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.pdb
-C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.Migrations.Another.resources
-C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.csproj.GenerateResource.cache
-C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.Migrations.third.resources
-C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.Migrations.Migration.resources
-C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.Migrations.anotherMigration.resources
-C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.Migrations.Transaction.resources
+C:\Users\Louda\source\repos\GeneralStoreAPI\GeneralStoreAPI\obj\Debug\GeneralStoreAPI.csprojAssemblyReference.cache

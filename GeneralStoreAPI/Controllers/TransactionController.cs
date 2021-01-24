@@ -12,38 +12,39 @@ namespace GeneralStoreAPI.Controllers
 {
     public class TransactionController : ApiController
     {
-        private readonly Transaction transactions = new Transaction();
+       // private readonly Transaction transaction = new Transaction();
         private readonly ApplicationDbContext _context = new ApplicationDbContext();
         [HttpPost]
         public async Task<IHttpActionResult> Create(Transaction transaction)
         {
             if (ModelState.IsValid)
             {
-                //Find Product and Customer
-                Product product = await _context.Products.FindAsync(transaction.ProductSKU.ToString());
+                Product product = await _context.Products.FindAsync(transaction.ProductSKU);
                 Customer customer = await _context.Customers.FindAsync(transaction.CustomerId);
-                //Verify that the product is in stock
-                if (transaction.Product.IsInStock)
+
+                if (product == null)
                 {
-                    //Check that there is enough product to complete the Transaction
-                    if (transaction.ItemCount <= transaction.Product.NumberInventory)
-                    {
-                        //add transaction
-                        _context.Transactions.Add(transaction);
-                        await _context.SaveChangesAsync();
-                        return Ok();
-                    }
-                    return BadRequest($"There are only {transaction.Product.NumberInventory} of {transaction.ItemCount}left in stock");
+                    return BadRequest("invalid Product ID");
                 }
 
+                if (customer == null)
+                {
+                    return BadRequest("invalid customer ID");
+                }
 
-                //Remove the Products that were bought
-                transaction.Product.NumberInventory -= transaction.ItemCount;//decrementation of the product.NumberInventory according to transaction.ItemCount
+                if (transaction.ItemCount > product.NumberInventory)
+                {
+                    return BadRequest($"There are only {product.NumberInventory} of {product.Name} left in stock");
+                }
+                product.NumberInventory -= transaction.ItemCount;
 
-               
+                _context.Transactions.Add(transaction);
+                await _context.SaveChangesAsync();
+                return Ok("Your Transaction was successfully created");
             }
-            return BadRequest(ModelState);   
+            return BadRequest(ModelState);   // 400
         }
+
         // Get All
         [HttpGet]
         public async Task<IHttpActionResult> GetAll()
@@ -53,7 +54,66 @@ namespace GeneralStoreAPI.Controllers
         }
 
 
-        //[HttpGet]
-        //public async Task<IHttpActionResult> GetAll
+        [HttpGet]
+        public async Task<IHttpActionResult> GetTransactionById([FromUri] int id)
+        {
+            Transaction transaction = await _context.Transactions.FindAsync(id);
+            if(transaction is null)
+            {
+                return NotFound();
+            }
+            return Ok(transaction);
+        }
+        [HttpPut]
+        public async Task<IHttpActionResult> UpdateTransaction([FromUri]int id,[FromBody] Transaction updatedTransaction)
+        {
+            //Chech the Ids if they match
+            if(id != updatedTransaction?.Id)
+            {
+                return BadRequest("The Ids do not match");
+            }
+
+            //Check the modelState
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            //Find the Transaction in the database
+            Transaction transaction = await _context.Transactions.FindAsync(id);
+
+            //if the transaction does not exist then do something 
+            if(transaction is null)
+            {
+                return NotFound();
+            }
+
+            //Update the Propreties 
+            transaction.Id = updatedTransaction.Id;
+            transaction.ItemCount = updatedTransaction.ItemCount;
+            transaction.ProductSKU = updatedTransaction.ProductSKU;
+            transaction.CustomerId = updatedTransaction.CustomerId;
+            transaction.DateOfTransaction = updatedTransaction.DateOfTransaction;
+
+            //Save the changes
+            await _context.SaveChangesAsync();
+            return Ok("Your transaction was updated");
+        }
+        [HttpDelete]
+        public async Task<IHttpActionResult> DeleteTransaction([FromUri]int id)
+        {
+           
+            Transaction transaction = await _context.Transactions.FindAsync(id);
+            if (transaction is null)
+                return NotFound();
+
+            _context.Transactions.Remove(transaction);
+            if (await _context.SaveChangesAsync() == 1)
+            {
+                return Ok("The restaurant was deletd.");
+            }
+            return InternalServerError();
+
+        }
     }
 }
